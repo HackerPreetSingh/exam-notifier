@@ -1,0 +1,16 @@
+{
+  "sources": [
+    {
+      "name": "SSC",
+      "enabled": true,
+      "client": "ssc",
+      "url": "https://ssc.gov.in/api/general-website/portal/records?page=1&limit=10&contentType=notice-boards&key=createdAt&order=DESC&pageType=filter&isAttachment=true&attributes=id,headline,examId,contentType,redirectUrl,startDate,endDate,language,createdAt&queryKey=startDate,endDate&customKey=createdAt&exams=false&date=false&language=english"
+    },
+    {
+      "name": "IBPS_CRP",
+      "enabled": true,
+      "client": "ibps",
+      "url": "https://www.ibps.in/index.php/crp-updates/"
+    }
+  ]
+}
