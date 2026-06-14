@@ -6,17 +6,33 @@ from clients.telegram_client import send_message
 
 def load_seen_notices():
 
-    with open("data/seen_notices.json", "r") as file:
+    with open(
+            "data/seen_notices.json",
+            "r"
+    ) as file:
+
         return json.load(file)
 
 
 def save_seen_notices(data):
 
-    with open("data/seen_notices.json", "w") as file:
-        json.dump(data, file, indent=2)
+    with open(
+            "data/seen_notices.json",
+            "w"
+    ) as file:
+
+        json.dump(
+            data,
+            file,
+            indent=2
+        )
 
 
-def process_source(source, seen_data):
+def process_source(
+        source,
+        seen_data,
+        run_mode
+):
 
     source_name = source["name"]
 
@@ -46,10 +62,19 @@ def process_source(source, seen_data):
             notice_id
         )
 
-        if notice_id not in seen_ids:
+        if run_mode == "test":
+
             new_notices.append(
                 notice
             )
+
+        else:
+
+            if notice_id not in seen_ids:
+
+                new_notices.append(
+                    notice
+                )
 
     if new_notices:
 
@@ -68,6 +93,7 @@ def process_source(source, seen_data):
             )
 
             if notice["url"]:
+
                 message += (
                     f"📄 {notice['url']}\n"
                 )
@@ -78,10 +104,12 @@ def process_source(source, seen_data):
             message
         )
 
-    seen_data[source_name] = list(
-        current_ids
-    )
+    if run_mode != "test":
 
-    save_seen_notices(
-        seen_data
-    )
+        seen_data[source_name] = list(
+            current_ids
+        )
+
+        save_seen_notices(
+            seen_data
+        )

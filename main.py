@@ -1,10 +1,19 @@
 import json
+import os
 
 from services.notice_service import (
     load_seen_notices,
     process_source
 )
 
+run_mode = os.getenv(
+    "RUN_MODE",
+    "prod"
+)
+
+print(
+    f"Running in {run_mode} mode"
+)
 
 with open(
         "data/config.json",
@@ -26,7 +35,8 @@ for source in config["sources"]:
 
     process_source(
         source,
-        seen_data
+        seen_data,
+        run_mode
     )
 
 print("Done")

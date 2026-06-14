@@ -2,9 +2,18 @@ name: Exam Notifier
 
 on:
   schedule:
-    - cron: "*/1 * * * *"
+    - cron: "*/15 * * * *"
 
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "Run mode"
+        required: true
+        default: "prod"
+        type: choice
+        options:
+          - prod
+          - test
 
 jobs:
   run-notifier:
@@ -27,5 +36,6 @@ jobs:
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
+          RUN_MODE: ${{ github.event.inputs.mode || 'prod' }}
         run: |
           python main.py
